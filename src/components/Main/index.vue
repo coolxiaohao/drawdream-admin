@@ -2,7 +2,6 @@
     <div class="main">
         <el-container>
             <Menu :collapsed="isCollapse" :imgSize="imgSize" :fold="fold"/>
-
             <el-container>
                 <!--header-->
                 <el-header style="text-align: left; border-bottom: #e6e6e6 solid 1px;background-color: #ffffff;">
@@ -22,17 +21,6 @@
                 <!--主内容-->
                 <el-main>
                     <router-view/>
-                    <!--          <el-card>-->
-                    <!--            <el-input/>-->
-                    <!--          </el-card>-->
-                    <!--          <el-table :data="tableData">-->
-                    <!--            <el-table-column prop="date" label="日期" width="140">-->
-                    <!--            </el-table-column>-->
-                    <!--            <el-table-column prop="name" label="姓名" width="120">-->
-                    <!--            </el-table-column>-->
-                    <!--            <el-table-column prop="address" label="地址">-->
-                    <!--            </el-table-column>-->
-                    <!--          </el-table>-->
                 </el-main>
                 <el-footer>
                     <span>©2020 drawdream.all rights reserved.</span>

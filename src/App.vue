@@ -9,18 +9,18 @@
 <!--      </p>-->
 <!--      <el-button>el-button</el-button>-->
 <!--    </div>-->
-    <Main msg="Welcome to Your Vue.js App"/>
-<!--      <router-view/>-->
+<!--    <Main msg="Welcome to Your Vue.js App"/>-->
+      <router-view/>
   </div>
 </template>
 
 <script>
-import Main from '_c/Main/index.vue'
+// import Main from '_c/Main/index.vue'
 
 export default {
   name: 'app',
   components: {
-      Main
+      // Main
   }
 }
 </script>

@@ -14,6 +14,7 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
     return modules
 }, {});
 //配置项
+// console.log(modules)
 export default new Vuex.Store({
     modules, //用这种方式就不需要每个module下的js||ts文件都需要引用一次
 })
