@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { login, logout, getInfo } from '@/api/login'
+import { login, logout, getInfo,getValidateCode } from '@/api/login'
 
 import {setToken,getToken} from "@/util";
 
@@ -49,6 +49,16 @@ export default {
             //         reject(error)
             //     })
             // })
+        },
+        getValidateCode() {
+            return new Promise((resolve, reject) => {
+                getValidateCode().then(res => {
+                    // const data = res.data
+                    resolve(res)
+                }).catch(error => {
+                    reject(error)
+                })
+            })
         },
     },
     modules: {}

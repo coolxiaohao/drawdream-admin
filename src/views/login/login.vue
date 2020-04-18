@@ -1,7 +1,7 @@
 <template>
     <div class="login-container">
         <vue-particles
-                style = "width: 100%;height: 100%"
+                style="width: 100%;height: 100%"
                 color="#dedede"
                 :particleOpacity="0.7"
                 :particlesNumber="150"
@@ -32,6 +32,19 @@
                           v-model="loginForm.password"
                           autoComplete="on"
                           placeholder="password"/>
+            </el-form-item>
+            <el-form-item prop="varify" class="varify-div">
+                <el-row type="flex">
+                    <el-col :span="17" class="el-col-right">
+                        <el-input class="varify-input" name="varify" type="text"
+                                  v-model="loginForm.varify"
+                                  autoComplete="on"
+                                  placeholder="password"/>
+                    </el-col>
+                    <el-col :span="7" class="el-col-left">
+                        <el-image class="varifyImg" :src="varifyImg"></el-image>
+                    </el-col>
+                </el-row>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" style="width:100%;" @click.native.prevent="handleLogin">
@@ -72,7 +85,9 @@
                     password: [{required: true, trigger: 'blur', validator: validatePass}]
                 },
                 // loading: false,
-                pwdType: 'password'
+                pwdType: 'password',
+                varifyImg: '',
+                varify: '',
             }
         },
         methods: {
@@ -99,7 +114,22 @@
                         return false
                     }
                 })
+            },
+            generateValidateCode() {
+                // let that = this;
+                this.$store.dispatch('getValidateCode').then((res) => {
+                    // console.log(res.data.captchaImg)
+                    let data = res.data;
+                    this.varifyImg = data.captchaImg
+                    this.varify = data.varify
+                }).catch(() => {
+                    // this.loading = false
+                })
             }
+        },
+        //页面构造前
+        mounted: function () {
+            this.generateValidateCode();
         }
     }
 </script>
@@ -146,6 +176,32 @@
             .el-button {
                 max-width: 450px;
             }
+            .el-row{
+                .el-col-right{
+                    text-align: right;
+                    .varify-input {
+                        margin-right: 10px;
+                        /*text-align: right;*/
+                        max-width: 350px;
+                    }
+                }
+                .el-col-left{
+                    text-align: left;
+                    .varifyImg {
+                        /*margin-left: 10px;*/
+                        /*text-align: left;*/
+                        height: 40px;
+                        max-width: 80px;
+                    }
+                }
+
+
+            }
+            /*.el-col{*/
+
+
+            /*}*/
+
         }
 
         .title {

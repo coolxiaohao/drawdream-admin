@@ -5,7 +5,7 @@ import {getToken} from '@/util'
 
 // create an axios instance
 const service = axios.create({
-    baseURL: '/api', //使用代理yarn remove [package]
+    baseURL: 'http://localhost:3743/', //使用代理yarn remove [package]
     withCredentials: true, // send cookies when cross-domain requests
     timeout: 3000 // request timeout
 })
@@ -48,6 +48,7 @@ service.interceptors.response.use(
             // Message.error(res.msg || 'error');
             return Promise.reject(res.msg || 'error')
         } else {
+            // console.log(res)
             return res;
         }
     },
