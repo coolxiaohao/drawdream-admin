@@ -35,13 +35,13 @@
             </el-form-item>
             <el-form-item prop="varify" class="varify-div">
                 <el-row type="flex">
-                    <el-col :span="17" class="el-col-right">
+                    <el-col :span="17">
                         <el-input class="varify-input" name="varify" type="text"
                                   v-model="loginForm.varify"
                                   autoComplete="on"
-                                  placeholder="password"/>
+                                  placeholder="varify"/>
                     </el-col>
-                    <el-col :span="7" class="el-col-left">
+                    <el-col :span="7">
                         <el-image class="varifyImg" :src="varifyImg"></el-image>
                     </el-col>
                 </el-row>
@@ -84,7 +84,6 @@
                     username: [{required: true, trigger: 'blur', validator: validateUsername}],
                     password: [{required: true, trigger: 'blur', validator: validatePass}]
                 },
-                // loading: false,
                 pwdType: 'password',
                 varifyImg: '',
                 varify: '',
@@ -101,13 +100,11 @@
             handleLogin() {
                 this.$refs.loginForm.validate(valid => {
                     if (valid) {
-                        // this.loading = true
                         console.log(this.$store)
                         this.$store.dispatch('Login', this.loginForm).then(() => {
-                            // this.loading = false
                             this.$router.push({path: '/'})
                         }).catch(() => {
-                            this.loading = false
+                            // this.loading = false
                         })
                     } else {
                         console.log('error submit!!')
@@ -116,9 +113,7 @@
                 })
             },
             generateValidateCode() {
-                // let that = this;
                 this.$store.dispatch('getValidateCode').then((res) => {
-                    // console.log(res.data.captchaImg)
                     let data = res.data;
                     this.varifyImg = data.captchaImg
                     this.varify = data.varify
@@ -134,85 +129,6 @@
     }
 </script>
 
-<style lang="scss" scoped>
-    $bg: #20222A;
-    $dark_gray: #889aa4;
-    $light_gray: #eee;
-    /*.login-page{*/
-    /*    position: fixed;*/
-    /*    height: 100%;*/
-    /*    width: 100%;*/
-    .login-container {
-        position: fixed;
-        height: 100%;
-        width: 100%;
-        background-color: $bg;
-        /*.login-card{*/
-        /*    !*z-index: 10;*!*/
-        /*    width: 60%;*/
-        /*    height: 40%;*/
-        /*    margin: 0 10%;*/
-        /*    padding: 10% 10%;*/
-        /*}*/
-        .login-page {
-            height: initial;
-            width: initial;
-        }
+<style lang="scss" src="./index.scss" scoped>
 
-        .login-form {
-            position: absolute;
-            top: 15%;
-            left: 20%;
-            z-index: 10;
-            width: 60%;
-            height: 40%;
-            /*margin: 0 10%;*/
-            /*padding: 15% 10%;*/
-            /*z-index: 99999;*/
-            .el-input {
-                max-width: 450px;
-            }
-
-            .el-button {
-                max-width: 450px;
-            }
-            .el-row{
-                .el-col-right{
-                    text-align: right;
-                    .varify-input {
-                        margin-right: 10px;
-                        /*text-align: right;*/
-                        max-width: 350px;
-                    }
-                }
-                .el-col-left{
-                    text-align: left;
-                    .varifyImg {
-                        /*margin-left: 10px;*/
-                        /*text-align: left;*/
-                        height: 40px;
-                        max-width: 80px;
-                    }
-                }
-
-
-            }
-            /*.el-col{*/
-
-
-            /*}*/
-
-        }
-
-        .title {
-            font-size: 26px;
-            font-weight: 400;
-            color: $light_gray;
-            margin: 0px auto 40px auto;
-            text-align: center;
-            font-weight: bold;
-        }
-    }
-
-    /*}*/
 </style>

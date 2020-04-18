@@ -5,7 +5,7 @@ import {getToken} from '@/util'
 
 // create an axios instance
 const service = axios.create({
-    baseURL: 'http://localhost:3743/', //使用代理yarn remove [package]
+    baseURL: '/api', //使用代理yarn remove [package]
     withCredentials: true, // send cookies when cross-domain requests
     timeout: 3000 // request timeout
 })
