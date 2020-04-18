@@ -1,38 +1,50 @@
 <template>
     <div class="login-container">
-        <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
-            <h3 class="title">vue-element-admin</h3>
+        <vue-particles
+                style = "width: 100%;height: 100%"
+                color="#dedede"
+                :particleOpacity="0.7"
+                :particlesNumber="150"
+                shapeType="circle"
+                :particleSize="4"
+                linesColor="#2980B9"
+                :linesWidth="2"
+                :lineLinked="true"
+                :lineOpacity="0.3"
+                :linesDistance="250"
+                :moveSpeed="3"
+                :hoverEffect="true"
+                hoverMode="grab"
+                :clickEffect="true"
+                clickMode="push"
+        >
+            <!--            <div class="login-page"></div>-->
+        </vue-particles>
+        <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm"
+                 label-position="left">
+            <h3 class="title">绘梦商城后台登录</h3>
             <el-form-item prop="username">
-        <span class="svg-container svg-container_login">
-<!--          <svg-icon icon-class="user" />-->
-        </span>
-                <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
+                <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on"
+                          placeholder="username"/>
             </el-form-item>
             <el-form-item prop="password">
-        <span class="svg-container">
-<!--          <svg-icon icon-class="password"></svg-icon>-->
-        </span>
-                <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
-                          placeholder="password"></el-input>
-                <span class="show-pwd" @click="showPwd">
-<!--                    <svg-icon icon-class="eye" />-->
-                </span>
+                <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin"
+                          v-model="loginForm.password"
+                          autoComplete="on"
+                          placeholder="password"/>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" style="width:100%;"  @click.native.prevent="handleLogin">
-                    Sign in
+                <el-button type="primary" style="width:100%;" @click.native.prevent="handleLogin">
+                    登录
                 </el-button>
             </el-form-item>
-            <div class="tips">
-                <span style="margin-right:20px;">username: admin</span>
-                <span> password: admin</span>
-            </div>
         </el-form>
     </div>
 </template>
 
 <script>
     import {isvalidUsername} from '@/util'
+
     export default {
         name: 'login',
         data() {
@@ -56,8 +68,8 @@
                     password: 'admin'
                 },
                 loginRules: {
-                    username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-                    password: [{ required: true, trigger: 'blur', validator: validatePass }]
+                    username: [{required: true, trigger: 'blur', validator: validateUsername}],
+                    password: [{required: true, trigger: 'blur', validator: validatePass}]
                 },
                 // loading: false,
                 pwdType: 'password'
@@ -78,7 +90,7 @@
                         console.log(this.$store)
                         this.$store.dispatch('Login', this.loginForm).then(() => {
                             // this.loading = false
-                            this.$router.push({ path: '/' })
+                            this.$router.push({path: '/'})
                         }).catch(() => {
                             this.loading = false
                         })
@@ -93,58 +105,58 @@
 </script>
 
 <style lang="scss" scoped>
-    $bg:#2d3a4b;
-    $dark_gray:#889aa4;
-    $light_gray:#eee;
+    $bg: #20222A;
+    $dark_gray: #889aa4;
+    $light_gray: #eee;
+    /*.login-page{*/
+    /*    position: fixed;*/
+    /*    height: 100%;*/
+    /*    width: 100%;*/
     .login-container {
         position: fixed;
         height: 100%;
         width: 100%;
         background-color: $bg;
-    .login-form {
-        position: absolute;
-        left: 0;
-        right: 0;
-        width: 520px;
-        padding: 35px 35px 15px 35px;
-        margin: 120px auto;
+        /*.login-card{*/
+        /*    !*z-index: 10;*!*/
+        /*    width: 60%;*/
+        /*    height: 40%;*/
+        /*    margin: 0 10%;*/
+        /*    padding: 10% 10%;*/
+        /*}*/
+        .login-page {
+            height: initial;
+            width: initial;
+        }
+
+        .login-form {
+            position: absolute;
+            top: 15%;
+            left: 20%;
+            z-index: 10;
+            width: 60%;
+            height: 40%;
+            /*margin: 0 10%;*/
+            /*padding: 15% 10%;*/
+            /*z-index: 99999;*/
+            .el-input {
+                max-width: 450px;
+            }
+
+            .el-button {
+                max-width: 450px;
+            }
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: 400;
+            color: $light_gray;
+            margin: 0px auto 40px auto;
+            text-align: center;
+            font-weight: bold;
+        }
     }
-    .tips {
-        font-size: 14px;
-        color: #fff;
-        margin-bottom: 10px;
-    span {
-    &:first-of-type {
-         margin-right: 16px;
-     }
-    }
-    }
-    .svg-container {
-        padding: 6px 5px 6px 15px;
-        color: $dark_gray;
-        vertical-align: middle;
-        width: 30px;
-        display: inline-block;
-    &_login {
-         font-size: 20px;
-     }
-    }
-    .title {
-        font-size: 26px;
-        font-weight: 400;
-        color: $light_gray;
-        margin: 0px auto 40px auto;
-        text-align: center;
-        font-weight: bold;
-    }
-    .show-pwd {
-        position: absolute;
-        right: 10px;
-        top: 7px;
-        font-size: 16px;
-        color: $dark_gray;
-        cursor: pointer;
-        user-select: none;
-    }
-    }
+
+    /*}*/
 </style>
