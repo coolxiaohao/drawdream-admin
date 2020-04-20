@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { login, logout, getInfo,getValidateCode } from '@/api/login'
-
+import { login,getValidateCode } from '@/api/login'
+// import util from  '../../util'
 import {setToken,getToken} from "@/util";
 
 Vue.use(Vuex)
@@ -35,20 +35,21 @@ export default {
     actions: {
         // 登录
         Login({ commit }, userInfo) {
-            console.log(123456789)
+            // console.log(123456789)
             const username = userInfo.username.trim()
-            console.log(username);
-            console.log(commit)
-            // return new Promise((resolve, reject) => {
-            //     login(username, userInfo.password).then(response => {
-            //         const data = response.data
-            //         setToken(data.token)
-            //         commit('SET_TOKEN', data.token)
-            //         resolve()
-            //     }).catch(error => {
-            //         reject(error)
-            //     })
-            // })
+            // console.log(username);
+            // console.log(commit)
+            return new Promise((resolve, reject) => {
+                login(username, userInfo.password,userInfo.varify,userInfo.varifyCode).then(response => {
+                    const data = response.data
+                    console.log(data)
+                    setToken(data.adminToken)
+                    commit('SET_TOKEN', data.adminToken)
+                    resolve()
+                }).catch(error => {
+                    reject(error)
+                })
+            })
         },
         getValidateCode() {
             return new Promise((resolve, reject) => {

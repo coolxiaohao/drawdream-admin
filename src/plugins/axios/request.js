@@ -2,6 +2,8 @@ import axios from 'axios'
 import store from '@/store'
 //webpack.config.js
 import {getToken} from '@/util'
+import qs from 'qs'
+// import {Loading} from "element-ui";
 
 // create an axios instance
 const service = axios.create({
@@ -13,11 +15,16 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
     config => {
+        // qs.parse()
+
         // do something before request is sent
         if (store.getters.token) {
             // let each request carry token --['X-Token'] as a custom key.
             config.headers['admin_token'] = getToken()
         }
+        config.method === 'post'
+            ? config.data = qs.stringify({...config.data})
+            : config.params = {...config.params};
         // config.timeout=1000
         return config
     },
@@ -27,7 +34,12 @@ service.interceptors.request.use(
         return Promise.reject(error)
     }
 )
-
+// const options={
+//     text:'拼命加载中',
+//     background: 'rgba(0, 0, 0, 0.8)',
+//     spinner: 'el-icon-loading',
+// }
+// let loadingInstance = Loading.service(options);
 // response interceptor
 service.interceptors.response.use(
     /**
@@ -41,6 +53,7 @@ service.interceptors.response.use(
      * You can also judge the status by HTTP Status Code. 您还可以通过HTTP状态代码来判断状态。
      */
     response => {
+
         const res = response.data
         // console.log(response)
         // if the custom code is not 20000, it is judged as an error.
@@ -51,11 +64,17 @@ service.interceptors.response.use(
             // console.log(res)
             return res;
         }
+        // setTimeout(function () {
+        //     loadingInstance.close();
+        // },700)
     },
     error => {
         // console.log(error.code)
         // Message.error(error.message)
         return Promise.reject(error)
+        // setTimeout(function () {
+        //     loadingInstance.close();
+        // },700)
     }
 )
 

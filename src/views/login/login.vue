@@ -44,16 +44,17 @@
                         <el-input class="varify-input" name="varify" type="text"
                                   v-model="loginForm.varify"
                                   autoComplete="on"
+                                  @keyup.enter.native="handleLogin"
                                   placeholder="varify"/>
                     </el-col>
                     <el-col :span="7">
-                        <el-image class="varifyImg" @click="generateValidateCode" :src="varifyImg"></el-image>
+                        <el-image class="varifyImg"  @click="generateValidateCode" :src="varifyImg"></el-image>
                     </el-col>
                 </el-row>
             </el-form-item>
             <!--登录按钮-->
             <el-form-item>
-                <el-button type="primary" style="width:100%;" @click.native.prevent="handleLogin">
+                <el-button  type="primary" style="width:100%;" @click.native.prevent="handleLogin">
                     登录
                 </el-button>
             </el-form-item>
@@ -86,7 +87,9 @@
             return {
                 loginForm: {
                     username: 'admin',
-                    password: 'admin'
+                    password: 'admin',
+                    varify: '',
+                    varifyCode: '',
                 },
                 loginRules: {
                     username: [{required: true, trigger: 'blur', validator: validateUsername}],
@@ -94,7 +97,6 @@
                 },
                 pwdType: 'password',
                 varifyImg: '',
-                varify: '',
             }
         },
         methods: {
@@ -126,8 +128,9 @@
             generateValidateCode() {
                 this.$store.dispatch('getValidateCode').then((res) => {
                     let data = res.data;
+                    // console.log(this.loginForm.varifyImg )
                     this.varifyImg = data.captchaImg
-                    this.varify = data.varify
+                    this.loginForm.varifyCode = data.varify
                 }).catch(() => {
                     // this.loading = false
                 })
