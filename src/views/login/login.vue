@@ -27,14 +27,14 @@
             <!--用户名-->
             <el-form-item prop="username">
                 <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on"
-                          placeholder="username"/>
+                          placeholder="请输入用户名"/>
             </el-form-item>
             <!--密码-->
             <el-form-item prop="password">
                 <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin"
                           v-model="loginForm.password"
                           autoComplete="on"
-                          placeholder="password"/>
+                          placeholder="请输入密码"/>
             </el-form-item>
             <!--验证码-->
             <el-form-item prop="varify" class="varify-div">
@@ -44,7 +44,7 @@
                                   v-model="loginForm.varify"
                                   autoComplete="on"
                                   @keyup.enter.native="handleLogin"
-                                  placeholder="varify"/>
+                                  placeholder="请输入验证码"/>
                     </el-col>
                     <el-col :span="7">
                         <el-image class="varifyImg" @click="generateValidateCode" :src="varifyImg"></el-image>
@@ -86,8 +86,8 @@
             }
             return {
                 loginForm: {
-                    username: 'admin',
-                    password: 'admin',
+                    username: '',
+                    password: '',
                     varify: '',
                     varifyCode: '',
                 },
