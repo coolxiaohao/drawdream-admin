@@ -12,6 +12,7 @@ module.exports = {
   },
   publicPath:BASE_URL,
   devServer: {//设置代理
+    // port: 8081,
     proxy: {
       '/api': {
         target: 'http://localhost:3743',   //代理接口

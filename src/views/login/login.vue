@@ -1,6 +1,5 @@
 <template>
     <div class="login-container">
-        <!--粒子动画插件-->
         <vue-particles
                 style="width: 100%;height: 100%"
                 color="#dedede"
@@ -48,13 +47,13 @@
                                   placeholder="varify"/>
                     </el-col>
                     <el-col :span="7">
-                        <el-image class="varifyImg"  @click="generateValidateCode" :src="varifyImg"></el-image>
+                        <el-image class="varifyImg" @click="generateValidateCode" :src="varifyImg"></el-image>
                     </el-col>
                 </el-row>
             </el-form-item>
             <!--登录按钮-->
             <el-form-item>
-                <el-button  type="primary" style="width:100%;" @click.native.prevent="handleLogin">
+                <el-button type="primary" style="width:100%;" @click.native.prevent="handleLogin">
                     登录
                 </el-button>
             </el-form-item>
@@ -65,6 +64,7 @@
 <script>
     /*验证用户名的方法*/
     import {isvalidUsername} from '@/util'
+
     export default {
         name: 'login',
         data() {
@@ -114,8 +114,15 @@
                     if (valid) {
                         console.log(this.$store)
                         this.$store.dispatch('Login', this.loginForm).then(() => {
+                            this.$message({
+                                message: '登录成功', type: 'success'
+                            })
                             this.$router.push({path: '/'})
-                        }).catch(() => {
+                        }).catch((error) => {
+                            this.$message({
+                                message: error, type: 'error'
+                            })
+                            // Message
                             // this.loading = false
                         })
                     } else {
@@ -138,7 +145,6 @@
         },
         //页面构造前
         mounted: function () {
-            /*调用登录前的方法*/
             this.generateValidateCode();
         }
     }

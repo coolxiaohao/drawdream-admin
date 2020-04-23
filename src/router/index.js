@@ -7,9 +7,9 @@ import Login from '../views/login'
 //加载条
 // import { Loading } from 'element-ui';
 //工具类
-import {getToken} from '@/util/index'
-import store from "element-ui/packages/cascader-panel/src/store";
-import {Loading} from "element-ui";
+import {getToken, setToken} from '@/util/index'
+import store from "@/store";
+import {Loading,Message} from "element-ui";
 
 
 Vue.use(VueRouter);
@@ -75,56 +75,89 @@ const router = new VueRouter({
     routes,
     mode: 'history',
 });
-const options={
-    text:'拼命加载中',
+const options = {
+    text: '拼命加载中',
     background: 'rgba(0, 0, 0, 0.8)',
     spinner: 'el-icon-loading',
 
 }
 router.beforeEach((to, from, next) => {
     let loadingInstance = Loading.service(options);
-    // Loading.service(options);
+    Loading.service(options);
+    // console.log(to.path)
+    // store.dispatch('createRule').then((res) => {
+    //     if (res.code == 200){
+    //         console.log("成功")
+    //     }
+    // })
+    store.dispatch('getRules',to.path).then((res) => {
+        // 获取页面登录权限 查看是否需要登录权限
+        if (res.code === 200){
+            let rules = null
+            rules = res.data;
+            if (rules != null && rules.type > 0) {
+                const token = getToken();
+                //判断是否存在该路由
+                if (!token && to.name !== 'login') {
+                    //未登陆且要跳转的页面不是登录页
+                    Message({message: "登录过期！请重新登录！", type: 'error'});
+                    next({
+                        name: 'login'
+                    })
+                } else if (!token && to.name === 'login') {
+                    // 未登陆且要跳转的页面是登录页
+                    next() // 跳转
+                } else if (token && to.name === 'login') {
+                    // console.log(123456)
 
-    // loadingInstance
-    const token = getToken();
-    //判断是否存在该路由
-    if (!token && to.name !== 'login') {
-        //未登陆且要跳转的页面不是登录页
-        next({
-            name: 'login'
-        })
-    }else if (!token && to.name === 'login') {
-        // 未登陆且要跳转的页面是登录页
-        next() // 跳转
-    }else  if (token && to.name === 'login'){
-        // console.log(123456)
+                    // 已登录且要跳转的页面是登录页
+                    next({
+                        name: 'admin_index' // 跳转到homeName页
+                    })
+                } else if (to.matched.length > 0) {
+                    // store.disP
+                    //
+                    // console.log(123456)
+                    //正常路由跳转
+                    // store.dispatch('getAdminInfo').then(() => {
+                    //     // 拉取用户信息，通过用户权限和跳转的页面的name来判断是否有权限访问;access必须是一个数组，如：['super_admin'] ['super_admin', 'admin']
+                    next()
+                    // }).catch(() => {
+                    //     // Message.s(this.$t(res.msg));
+                    //     setToken('')
+                    //     next({
+                    //         name: 'admin_index_index'
+                    //     })
+                    // })
+                } else {
 
-        // 已登录且要跳转的页面是登录页
-        next({
-            name: 'admin_index' // 跳转到homeName页
+                    next('admin_index');
+                }
+            } else {
+                next()
+            }
+        }else {
+            Message({
+                message: res.msg, type: 'error'
+            })
+        }
+    }).catch((error) => {
+        Message({
+            message: error, type: 'error'
         })
-    } else if (to.matched.length > 0) {
-        // store.disP
-        //
-        // console.log(123456)
-        //正常路由跳转
-        // store.dispatch('getAdminInfo').then(() => {
-        //     // 拉取用户信息，通过用户权限和跳转的页面的name来判断是否有权限访问;access必须是一个数组，如：['super_admin'] ['super_admin', 'admin']
-            next()
-        // }).catch(() => {
-        //     // Message.s(this.$t(res.msg));
-        //     setToken('')
-        //     next({
-        //         name: 'admin_index_index'
-        //     })
+        // setToken('')
+        // next({
+        //     name: 'admin_index_index'
         // })
-    } else {
+        //检查权限失败
+    })
+    // loadingInstance
+    // console.log(rules)
 
-        next('admin_index');
-    }
-    setTimeout(function () {
-        loadingInstance.close();
-    },700)
+
+    // setTimeout(function () {
+    loadingInstance.close();
+    // },700)
 
 });
 // this.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
