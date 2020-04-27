@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import {delLocalStorage, getLocalStorage, setLocalStorage} from "../../util";
 
 Vue.use(Vuex)
 /**
@@ -7,10 +8,27 @@ Vue.use(Vuex)
  */
 export default{
     //单一状态树
-    state: {},
+    state: {
+        previous: getLocalStorage('precious')
+    },
     //变更状态 必須為同步
-    mutations: {},
+    mutations: {
+        SET_PRAEIOUS: (state, previous) => {
+            state.previous = previous
+        },
+    },
     //异步发行
-    actions: {},
+    actions: {
+        setPrevious({commit},previous){
+            console.log(previous)
+            commit('SET_PRAEIOUS',previous)
+            setLocalStorage('precious',previous)
+        },
+        delPrevious({commit},previous){
+            // console.log(previous)
+            commit('SET_PRAEIOUS',previous)
+            delLocalStorage('precious')
+        },
+    },
     modules: {}
 }

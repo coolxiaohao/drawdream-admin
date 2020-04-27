@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie'
 // cookie保存的天数
 import config from '@/defaultConfig'
+// import localStorage from ''
 const {cookieExpires} = config
 
 export const TOKEN_KEY = 'admin_token'
@@ -17,6 +18,26 @@ export const getToken = () => {
     if (token) return token
     else return false
 }
+
+export const setLocalStorage = (key,value) => {
+    // if (value == null || value == undefined) {
+    //     localStorage.removeItem(key)
+    // }else {
+        localStorage.setItem(key,value)
+    // }
+    //本地储存
+
+}
+
+export const getLocalStorage = (key) => {
+    return localStorage.getItem(key) || ''
+}
+
+export const delLocalStorage = (key) => {
+    localStorage.removeItem(key)
+}
+
+
 /**
  * 添加cookie值
  * @param key

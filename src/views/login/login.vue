@@ -1,6 +1,6 @@
 <template>
     <div class="login-container">
-        <vue-particles
+<!--        <vue-particles
                 style="width: 100%;height: 100%"
                 color="#dedede"
                 :particleOpacity="0.7"
@@ -18,8 +18,8 @@
                 :clickEffect="true"
                 clickMode="push"
         >
-            <!--            <div class="login-page"></div>-->
-        </vue-particles>
+            &lt;!&ndash;            <div class="login-page"></div>&ndash;&gt;
+        </vue-particles>-->
         <!--登录表单-->
         <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm"
                  label-position="left">

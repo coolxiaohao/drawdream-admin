@@ -100,28 +100,35 @@ router.beforeEach((to, from, next) => {
                 //判断是否存在该路由
                 if (!token && to.name !== 'login') {
                     //未登陆且要跳转的页面不是登录页
-                    Message({message: "登录过期！请重新登录！", type: 'error'});
+                    console.log(store.state.system.previous)
+                    if (store.state.system.previous !== '' && store.state.system.previous !== undefined) {
+                        Message({message: "登录过期！请重新登录！", type: 'error'});
+                        store.dispatch('delPrevious','')
+                    }
+
                     next({
                         name: 'login'
                     })
+
+
                 } else if (!token && to.name === 'login') {
                     // 未登陆且要跳转的页面是登录页
                     next() // 跳转
                 } else if (token && to.name === 'login') {
-                    // console.log(123456)
-
                     // 已登录且要跳转的页面是登录页
+
+                    // store.state.system.previous = to.path
                     next({
                         name: 'admin_index' // 跳转到homeName页
                     })
+
                 } else if (to.matched.length > 0) {
-                    // store.disP
-                    //
-                    // console.log(123456)
+                    store.dispatch('setPrevious',to.path)
                     //正常路由跳转
                     // store.dispatch('getAdminInfo').then(() => {
                     //     // 拉取用户信息，通过用户权限和跳转的页面的name来判断是否有权限访问;access必须是一个数组，如：['super_admin'] ['super_admin', 'admin']
                     next()
+
                     // }).catch(() => {
                     //     // Message.s(this.$t(res.msg));
                     //     setToken('')
@@ -130,7 +137,8 @@ router.beforeEach((to, from, next) => {
                     //     })
                     // })
                 } else {
-
+                    // store.dispatch('setPrevious',to.path)
+                    store.dispatch('setPrevious',to.path)
                     next('admin_index');
                 }
             } else {
@@ -145,23 +153,9 @@ router.beforeEach((to, from, next) => {
         Message({
             message: error, type: 'error'
         })
-        // setToken('')
-        // next({
-        //     name: 'admin_index_index'
-        // })
-        //检查权限失败
     })
-    // loadingInstance
-    // console.log(rules)
-
-
-    // setTimeout(function () {
     loadingInstance.close();
-    // },700)
 
 });
-// this.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
-//     loadingInstance.close();
-// });
 
 export default router
