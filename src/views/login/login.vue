@@ -1,25 +1,25 @@
 <template>
     <div class="login-container">
-<!--        <vue-particles
+        <vue-particles
                 style="width: 100%;height: 100%"
                 color="#dedede"
                 :particleOpacity="0.7"
-                :particlesNumber="150"
+                :particlesNumber="80"
                 shapeType="circle"
                 :particleSize="4"
                 linesColor="#2980B9"
-                :linesWidth="2"
+                :linesWidth="1"
                 :lineLinked="true"
-                :lineOpacity="0.3"
-                :linesDistance="250"
+                :lineOpacity="0.2"
+                :linesDistance="150"
                 :moveSpeed="3"
                 :hoverEffect="true"
                 hoverMode="grab"
                 :clickEffect="true"
                 clickMode="push"
         >
-            &lt;!&ndash;            <div class="login-page"></div>&ndash;&gt;
-        </vue-particles>-->
+                       <div class="login-page"></div>
+        </vue-particles>
         <!--登录表单-->
         <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm"
                  label-position="left">
